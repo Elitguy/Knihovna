@@ -1,0 +1,15 @@
+{block content}
+<h5 class="card-header">Akce</h5>
+<div class="card-body">
+    {foreach $MyEvents as $row}
+        {if $row->count > 0 }
+        <strong>{$row->event_name} - {$row->event_date}</strong>     
+        {else}
+            <strong>Nemáme žádné akce</strong>    
+        {/if}
+    {/foreach}
+</div>
+{/block}           
+
+
+

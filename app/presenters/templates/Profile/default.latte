@@ -1,0 +1,61 @@
+{var $title = 'Profil'}
+
+{block content}
+{foreach $MyProfile as $row}
+    <h2>{$row->user_name} {$row->user_surname}</h2>
+{/foreach}
+
+
+<ul class="nav nav-tabs" id="myTab" role="tablist">
+    <li class="nav-item">
+        <a class="nav-link active" id="leases-tab" data-toggle="tab" href="#leases" role="tab" aria-controls="leases" aria-selected="true">Výpůjčky</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" id="history-tab" data-toggle="tab" href="#history" role="tab" aria-controls="history" aria-selected="false">Historie výpůjček</a>
+    </li>
+
+</ul>
+<div class="tab-content" id="myTabContent">
+    <div class="tab-pane fade show active" id="leases" role="tabpanel" aria-labelledby="home-tab">
+        <table class="table">
+            <thead>
+            <th>Název knihy</th>
+            <th>Autor</th>
+            <th>Do kdy musím várit</th>
+            </thead>
+
+            <tbody>
+                {foreach $myLeases as $row}
+                    <tr>            
+                        <td>{$row->book_name}</td>
+                        <td>{$row->author_name}{$row->author_surname}</td>
+
+                        {if $row->late == 1}
+                            <td class="bg-danger">{$row->until}</td>
+                        {else}
+                            <td class="bg-success">{$row->until}</td>
+                        {/if}
+
+                    {/foreach}
+            </tbody>
+        </table> 
+    </div>
+    <div class="tab-pane fade" id="history" role="tabpanel" aria-labelledby="profile-tab">
+        <table class="table">
+            <thead>
+            <th>Název knihy</th>
+            <th>Autor</th>
+            </thead>
+            <tbody>
+                {foreach $myHistory as $row}
+                    <tr>            
+                        <td>{$row->book_name}</td>
+                        <td>{$row->author_name}{$row->author_surname}</td>
+                    {/foreach}
+            </tbody>
+        </table> 
+    </div>
+</div>
+
+{/block}
+

@@ -1,0 +1,30 @@
+{var $title = 'Služby knihovny'}
+
+{block content}
+<div class="row">
+    <div class="col-md-9">
+        <h2>Služby knihovny</h2>
+        <div>
+            <p>Milí návštěvníci, nabízíme Vám především tyto služby:</p>
+            <ul>
+                <li><strong><u>Výpůjční služby</u></strong>&nbsp;Vám zajistí neomezený přísun četby přesně podle Vašeho vkusu a nálady. Báječná věc, pohodlná a praktická. Žáci Základní Školy Hrochův Týnec neplatí žádné registrační poplatky, výpůjčky jsou&nbsp;<strong><u>zcela zdarma</u></strong>.</li>
+                <li><strong><u>Zodpovíme Vaše dotazy!</u></strong></li>
+            </ul>
+            <p>Nejdůležitější informace o provozu naší knihovny a pravidlech pro výpůjčky naleznete v knihovním řádu.</p>
+            <p><strong>Budeme rádi, když nám dáte vědět, zda jste s našimi službami spokojeni!</strong></p>
+            <!--    <p>Oslovte nás přímo v knihovně, nebo využijte <a href="https://zsht-knihovna.webnode.cz/kontakt/">on-line kontaktní formulář</a>.<span style="display: none;">&nbsp;</span></p>-->
+        </div>
+        <p>&nbsp;</p>
+    </div>
+    <div class="col-md-3">
+        <div class="card my-3">  
+            {include ../News/default.latte}
+        </div>
+        <div class="card my-4">
+            {include ../Events/default.latte}
+        </div>
+    </div>
+</div>
+
+{/block}
+

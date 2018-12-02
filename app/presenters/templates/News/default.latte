@@ -1,0 +1,15 @@
+{block content}
+<h5 class="card-header">Novinky</h5>
+<div class="card-body">
+    {foreach $MyNews as $row}  
+        {if $row->count > 0}
+            <strong>{$row->news_name} - {$row->news_date}</strong><br> 
+            {else}
+              <strong>Nemáme žádné ovinky</strong>
+            {/if}
+    {/foreach}
+</div>
+{/block}           
+
+
+

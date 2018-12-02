@@ -1,0 +1,37 @@
+{var $title = 'Seznam knih'}
+{block content}
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <h3 class="card-header text-center font-weight-bold text-uppercase py-4">Seznam knih</h3>
+            <div class="card-body">
+                <div id="table" class="table-editable">
+                    <label>Vyhledat:<input type="search" id="myInput" onkeyup="myFunction()"class="form-control form-control-sm"></label>
+                    <table id="myTable" class="table table-bordered table-responsive-md table-striped text-center">
+                        <tr>
+                            <th class="text-center">Název knihy</th>
+                            <th class="text-center">Žánr</th>
+                            <th class="text-center">Autor</th>
+                            <th class="text-center">Číslo knihy</th>
+                        </tr>
+
+                        <!-- This is our clonable table line -->
+                        {foreach $AllBooks as $row}
+                            <tr class="hide">
+                                <td class="pt-3-half" contenteditable="false">{$row->book_name}</td>
+                                <td class="pt-3-half" contenteditable="false">{$row->genre_name}</td>
+                                <td class="pt-3-half" contenteditable="false">{$row->author_name} {$row->author_surname}</td>
+                                <td class="pt-3-half" contenteditable="false">{$row->book_number}</td>                             
+                            </tr>
+                        {/foreach}               
+                    </table>                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{/block}           
+
+
+

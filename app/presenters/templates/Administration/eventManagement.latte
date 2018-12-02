@@ -1,0 +1,39 @@
+{var $title = 'Administrace - správa akcí'}
+<h2>Akce</h2>
+{block content}
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <h3 class="card-header text-center font-weight-bold text-uppercase py-4">Editovat akce</h3>
+            <div class="card-body">
+                <div id="table" class="table-editable">
+                    <span class="table-add float-right mb-3 mr-2"><a n:href="Administration:createEvent" class="text-success"><i class="fa fa-plus fa-2x" aria-hidden="true"></i></a></span>
+                    <label>Vyhledat:<input type="search" id="myInput" onkeyup="myFunction()"class="form-control form-control-sm"></label>
+                    <table id="myTable" class="table table-bordered table-responsive-md table-striped text-center">
+                        <tr>
+                            <th class="text-center">Název akce</th>
+                            <th class="text-center">Obsah akce</th>
+                            <th class="text-center">Datum</th>
+                            <th class="text-center">Akce</th>
+                        </tr>
+                        <!-- This is our clonable table line -->
+                        {foreach $event as $row}
+                            <tr class="hide">
+                                <td class="pt-3-half" contenteditable="false">{$row->event_name}</td>
+                                <td class="pt-3-half" contenteditable="false">{$row->event_content}</td>
+                                <td class="pt-3-half" contenteditable="false">{$row->event_date}</td>
+                                <td>
+                                    <span class="table-remove"><a n:href = "Administration:editEvent $row->event_id"><button type="button" class="btn btn-primary btn-rounded btn-sm my-0">Upravit</button></a></span>
+                                    <span class="table-remove"><a n:href="delete!, $row->event_id"><button type="button" class="btn btn-danger btn-rounded btn-sm my-0">Odstranit</button></a></span>
+                                </td>
+                            </tr>
+                        {/foreach}               
+                    </table>
+                    <a n:href="Administration:"><button type="button" class="btn btn-primary"><i class="fa fa-arrow-left" aria-hidden="true"></i> Zpět</button></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{/block}

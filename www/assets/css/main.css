@@ -1,0 +1,15 @@
+main{
+    padding-top: 25px;
+
+}
+.size{
+    padding-right: 300px;
+}
+.mb-1, .my-1 {
+    margin-bottom: 0rem!important;
+}
+
+.view,
+.mask{
+	overflow: visible !important;
+}

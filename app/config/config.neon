@@ -1,0 +1,23 @@
+parameters:
+
+
+application:
+	errorPresenter: Error
+	mapping:
+		*: App\*Module\Presenters\*Presenter
+
+
+session:
+	expiration: 14 days
+
+
+services:
+	router: App\RouterFactory::createRouter
+	authenticator: App\UserAuthenticator
+
+	authorizator:
+		class: Nette\Security\Permission
+		setup:
+			- addRole(guest)
+			- addRole(authenticated, guest)
+			- addRole(admin, authenticated)

@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="cs">
+
+    <head>
+        <meta charset="utf-8">
+
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>Knihovna</title>
+        <!-- Font Awesome -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+        <!-- Bootstrap core CSS -->
+        <link href="{$baseUrl}/assets/css/bootstrap.min.css" rel="stylesheet">
+        <!-- Material Design Bootstrap -->
+        <link href="{$baseUrl}/assets/css/mdb.min.css" rel="stylesheet">
+        <!-- Your custom styles (optional) -->
+        <link href="{$baseUrl}/assets/css/style.css" rel="stylesheet">
+        <!-- Main CSS -->
+        <link href="{$baseUrl}/assets/css/main.css" rel="stylesheet">
+
+        <title>{ifset $title}{$title|striptags}{/ifset}</title>
+
+    </head>
+    <body>
+
+        <header>
+            <nav class="mb-1 navbar navbar-expand-lg navbar-dark info-color">
+                <div class="container">
+                    <a class="navbar-brand" n:href="Homepage:">Knihovna ZŠHT</a>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent-4" aria-controls="navbarSupportedContent-4" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent-4">
+                        <ul class="navbar-nav ml-auto">
+                            <li class="nav-item active">
+                                <a class="nav-link waves-effect waves-light" n:href="Homepage:">
+                                    <i class="fa fa-home"></i> Úvod
+                                    <span class="sr-only">(current)</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link waves-effect waves-light" n:href="Page:about">
+                                    <i class="fa fa-info"></i> O nás</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link waves-effect waves-light" n:href="Page:services">
+                                    <i class="fa fa-child"></i> Služby</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link waves-effect waves-light"  n:href="Books:">
+                                    <i class="fa fa-book"></i> Seznam knih</a>
+                            </li>
+                            {if !$user->isLoggedIn()}
+                                <li class="nav-item">
+                                    <a class="nav-link waves-effect waves-light" n:href="Register:">
+                                        <i class="fa fa-registered"></i> Registrovat</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link waves-effect waves-light" n:href="Login:">
+                                        <i class="fa fa-sign-in"></i> Přihlásit</a>
+                                </li>
+                            {else}
+                                {if $user->isInRole("authenticated")}
+                                    <li class="nav-item dropdown">
+                                        <a class="nav-link dropdown-toggle waves-effect waves-light" id="navbarDropdownMenuLink-4" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                            <i class="fa fa-user"></i> Profil  
+                                            {foreach $Late as $row}
+                                                {if $row->late > 0}
+                                                    <strong class="danger-ic">({$row->late})</strong>
+                                                {/if}
+                                            {/foreach}</a>
+                                        <div class="dropdown-menu dropdown-menu-right dropdown-info" aria-labelledby="navbarDropdownMenuLink-4">
+                                            <a class="dropdown-item waves-effect waves-light" n:href="Profile:"><i class="fa fa-id-card"></i> Můj profil</a>
+                                            <a class="dropdown-item waves-effect waves-light" n:href="Logout:"><i class="fa fa-sign-out"></i> Odhlásit</a>
+                                        </div>
+                                    </li>
+                                {else}
+                                    <li class="nav-item">
+                                        <a class="nav-link waves-effect waves-light" n:href="Administration:">
+                                            <i class="fa fa-keyboard-o"></i> Administrace</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link waves-effect waves-light" n:href="Leases:">
+                                            <i class="fa fa-archive"></i> Výpujčky</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link waves-effect waves-light" n:href="Logout:">
+                                            <i class="fa fa-sign-out"></i> Odhlásit</a>
+                                    </li>
+                                {/if}
+                            {/if}
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+        </header>
+        <main>
+
+            <div class="container">
+                <div class="bg"></div>
+                {include content} 
+            </div>
+
+        </main>
+
+        {block scripts}
+        <script type="text/javascript" src="{$baseUrl}/assets/js/jquery-3.3.1.min.js"></script>
+        <!-- Bootstrap tooltips -->
+        <script type="text/javascript" src="{$baseUrl}/assets/js/popper.min.js"></script>
+        <!-- Bootstrap core JavaScript -->
+        <script type="text/javascript" src="{$baseUrl}/assets/js/bootstrap.min.js"></script>
+        <!-- MDB core JavaScript -->
+        <script type="text/javascript" src="{$baseUrl}/assets/js/mdb.min.js"></script>
+        <script type="text/javascript" src="{$baseUrl}/assets/js/main.js"></script>
+
+
+
+        {/block}
+    </body>
+</html>
