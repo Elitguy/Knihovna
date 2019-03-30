@@ -1,43 +1,57 @@
-{var $title = 'Administrace - správa knih'}
-<h2>Upravit knihu</h2>
-{block content}
-<div class="row">
-    <div class="col-md-12">
-        <div class="card">
-            <h3 class="card-header text-center font-weight-bold text-uppercase py-4">Editovat knihy</h3>
-            <div class="card-body">
-                <div id="table" class="table-editable">
-                    <span class="table-add float-right mb-3 mr-2"><a n:href="Administration:createBook" class="text-success"><i class="fa fa-plus fa-2x" aria-hidden="true"></i></a></span>
-                    <label>Vyhledat:<input type="search" id="myInput" onkeyup="myFunction()"class="form-control form-control-sm"></label>
-                    <table id="myTable" class="table table-bordered table-responsive-md table-striped text-center">
-                        <tr>
-                            <th class="text-center">Název knihy</th>
-                            <th class="text-center">Žánr</th>
-                            <th class="text-center">Autor</th>
-                            <th class="text-center">Číslo knihy</th>
-                            <th class="text-center">Akce</th>
-                        </tr>
 
-                        <!-- This is our clonable table line -->
-                        {foreach $books as $row}
-                            <tr class="hide">
-                                <td class="pt-3-half" contenteditable="false">{$row->book_name}</td>
-                                <td class="pt-3-half" contenteditable="false">{$row->genre_name}</td>
-                                <td class="pt-3-half" contenteditable="false">{$row->author_name} {$row->author_surname}</td>
-                                <td class="pt-3-half" contenteditable="false">{$row->book_number}</td>
-                                <td>
-                                    <span class="table-remove"><a n:href = "Administration:editBook $row->book_id"><button type="button" class="btn btn-primary btn-rounded btn-sm my-0">Upravit</button></a></span>
-                                    <span class="table-remove"><a n:href = "Administration:duplicateBook $row->book_id"><button type="button" class="btn btn-success btn-rounded btn-sm my-0">Duplikovat</button></a></span>
-                                    <span class="table-remove"><a n:href="delete!, $row->book_id"><button type="button" class="btn btn-danger btn-rounded btn-sm my-0">Odstranit</button></a></span>
-                                </td>
-                            </tr>
-                        {/foreach}               
-                    </table>
-                    <a n:href="Administration:"><button type="button" class="btn btn-primary"><i class="fa fa-arrow-left" aria-hidden="true"></i> Zpět</button></a>
+{var $title = 'Administrace - správa knih'}
+{block content}
+{if $user->isInRole("administrator")}
+    <div class="container">    
+        <div class="row animated animatedFadeInUp fadeInUp">
+            <div class="col-md-12">
+                <div class="card">
+                    <h3 class="card-header text-center font-weight-bold text-uppercase py-4">Správa knih</h3>
+                    <div class="flashes" n:if="$flashes">
+                        <div n:foreach="$flashes as $flash" class="alert alert-success" role="alert">{$flash->message}</div>
+                    </div>
+                    <label class="pull-left search-book">Vyhledat: <input placeholder="Zadejte název knihy" type="search" id="myInput" onkeyup="myFunction()"class="form-control-sm search-form"> <a n:href="Administration:createBook" class="text-success"><i class="fa fa-plus fa-2x pull-right" aria-hidden="true"></i></a><a n:href="Administration:" class="text-success"><i class="fa fa-arrow-left fa-2x pull-right" aria-hidden="true"></i></a></label>
+                    <div class="card-body">
+                        <div id="table" class="table-editable">
+                            <div class="table-wrapper-scroll-y">
+                                <table id="myTable" class="table table-bordered table-responsive-md table-striped text-center">
+                                    <tr>
+                                        <th class="text-center th-name">Název knihy</th>
+                                        <th class="text-center th-name">Žánr</th>
+                                        <th class="text-center th-name">Autor</th>
+                                        <th class="text-center th-name">Číslo knihy</th>
+                                        <th class="text-center th-name">Akce</th>
+                                    </tr>
+                                    {foreach $books as $row}
+                                        <tr class="hide">
+                                            <td class="pt-3-half" contenteditable="false">{$row->book_name}</td>
+                                            <td class="pt-3-half" contenteditable="false">{$row->genre_name}</td>
+                                            <td class="pt-3-half" contenteditable="false">{$row->author_name} {$row->author_surname}</td>
+                                            <td class="pt-3-half" contenteditable="false">{$row->book_number}</td>
+                                            <td>
+                                                <span class="table-remove"><a n:href = "Administration:editBook $row->book_id"><button type="button" class="btn btn-primary btn-rounded btn-sm my-0">Upravit</button></a></span>
+                                                <span class="table-remove"><a n:href = "Administration:duplicateBook $row->book_id"><button type="button" class="btn btn-success btn-rounded btn-sm my-0">Duplikovat</button></a></span>
+                                                <span class="table-remove"><a n:href="delete!, $row->book_id" onclick="return confirm('Opravdu chcete smazat knihu?')"><button type="button" class="btn btn-danger btn-rounded btn-sm my-0">Odstranit</button></a></span>
+                                            </td>
+                                        </tr>
+                                    {/foreach}    
+                            </div>
+                            </table>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
 
+{else}
+    <div class="container">
+        <div class="row animated animatedFadeInUp fadeInUp white-background-danger">
+            <div class="col-md-12">
+                <strong class="danger-text">Nemáš povolení k této akci!</strong>  
+            </div> 
+        </div>
+    </div>
+{/if}
 {/block}

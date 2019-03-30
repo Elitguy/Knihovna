@@ -1,14 +1,31 @@
-{var $title = 'Registrace'}
+{var $title = 'Přihlásit'}
 
 {block content}
-<div class="row">
-<div class="col-md-12">
-    <h1>Registrace</h1>
-</div>
+<div class="wrapper">
+    {form registerForm class => "Form animated animatedFadeInUp fadeInUp"}
+        <h2 class="form-signin-heading">Registrace</h2>
+        <div class="flashes" n:if="$form->ownErrors">
+            <div n:foreach="$form->ownErrors as $error" class="alert alert-danger" role="alert">{$error}</div>
         </div>
-        <div class="row">
-        <div class="col-md-5">
-    {control registerForm}¨
-    </div>
+        <div class="flashes" n:if="$flashes">
+            <div n:foreach="$flashes as $flash" class="alert alert-{$flash->type}" role="alert">{$flash->message}</div>
+        </div>
+        <div class="form-group form-group-main">
+            {input user_name, class => ($form['user_name']->hasErrors() ? 'has-error ') . "form-control form-control-main"}
+        </div>
+        <div class="form-group form-group-main">
+            {input user_surname, class => ($form['user_surname']->hasErrors() ? 'has-error ') . "form-control form-control-main"}
+        </div>
+        <div class="form-group form-group-main">
+            {input user_email, class => ($form['user_email']->hasErrors() ? 'has-error ') . "form-control form-control-main"}
+        </div>
+        <div class="form-group form-group-main">
+            {input password, class => ($form['password']->hasErrors() ? 'has-error ') . "form-control form-control-main"}
+        </div>
+        <div class="form-group form-group-main">
+            {input password2, class => ($form['password2']->hasErrors() ? 'has-error ') . "form-control form-control-main"}
+        </div>
+        {input register, class => "btn btn-primary btn-block btn-login"}
+    {/form}
 </div>
 {/block}

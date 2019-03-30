@@ -11,6 +11,7 @@ class LogoutPresenter extends BasePresenter
     if($user->isLoggedIn()) {
       $user->logout();
     }
-    $this->redirect('Homepage:');
+    $this->flashMessage('Odhlášení bylo úspěšné.');
+    $this->redirect('Login:');
   }
 }

@@ -1,12 +1,34 @@
-{var $title = 'Administrace - vytvořit knihu'}
+{var $title = 'Vytvořit knihu'}
 {block content}
-<div class="row">
-    <div class="col-md-12">
-        <h2>Vytvořit knihu</h2>
-        <hr>
-        {control createBookForm}
-         <br>
-         <a n:href="Administration:bookManagement">Zpět</a>
+{if $user->isInRole("administrator")}
+    <div class="container">
+        <div class="row animated animatedFadeInUp fadeInUp white-background">
+            <div class="col-md-12">
+                <strong class="h5">Vytvořit knihu</strong>   
+            </div>
+            <div class="col-md-3">
+
+            </div>  
+            <div class="col-md-6">
+                {control createBookForm}
+            </div>
+            <div class="col-md-3">
+
+            </div>
+            <div class="col-md-2">
+                <span class="table-add float-right mb-3 mr-2"><a n:href="Administration:bookManagement" class="text-success"><i class="fa fa-arrow-left fa-2x" aria-hidden="true"></i></a></span>
+            </div>
+
+        </div>
     </div>
-</div>
+
+{else}
+    <div class="container">
+        <div class="row animated animatedFadeInUp fadeInUp white-background-danger">
+            <div class="col-md-12">
+                <strong class="danger-text">Nemáš povolení k této akci!</strong>  
+            </div> 
+        </div>
+    </div>
+{/if}
 {/block}

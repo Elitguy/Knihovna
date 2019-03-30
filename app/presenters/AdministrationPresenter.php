@@ -28,8 +28,8 @@ class AdministrationPresenter extends BasePresenter {
 
             $renderer = $form->getRenderer();
             $renderer->wrappers['controls']['container'] = null;
-            $renderer->wrappers['pair']['container'] = 'div class="material"';
-            $renderer->wrappers['label']['container'] = null;
+            $renderer->wrappers['pair']['container'] = 'div class="material padding-input"';
+            $renderer->wrappers['label']['container'] = 'div class="name-control pull-left"';
             $renderer->wrappers['control']['container'] = null;
 
             $form->addText('book_name', 'Název knihy')
@@ -48,8 +48,8 @@ class AdministrationPresenter extends BasePresenter {
                     ->setRequired('Žánr')
                     ->setAttribute('class', 'form-control');
 
-            $form->addSubmit('send', 'Přidat knihu')
-                    ->setAttribute('class', 'btn btn-primary');
+            $form->addSubmit('send', 'Vytořit knihu')
+                    ->setAttribute('class', 'btn btn-primary btn-text');
             $form->onSuccess[] = [$this, 'addBook'];
             return $form;
         }
@@ -63,6 +63,7 @@ class AdministrationPresenter extends BasePresenter {
     public function addBook(UI\Form $form, Nette\Utils\ArrayHash $values) {
         try {
             $this->database->query('INSERT INTO books(book_name ,author_name, author_surname, book_number, genre) VALUES(?, ?, ?, ?, ?)', $values['book_name'], $values['author_name'], $values['author_surname'], $values['book_number'], $values['genre']);
+            $this->flashMessage('Kniha byla vytvořena.');
             $this->redirect('Administration:bookManagement');
         } catch (Nette\Security\AuthenticationException $e) {
             $form->addError('Nepovedlo se přidat knihu.');
@@ -76,13 +77,17 @@ class AdministrationPresenter extends BasePresenter {
         $new = $this->database->query("select * from news WHERE news_id  = ?", $id)->fetch();
         $event = $this->database->query("select * from events WHERE event_id  = ?", $id)->fetch();
         if ($book) {
+
             $this->database->query("delete from books WHERE book_id  = ?", $id);
+            $this->flashMessage('Kniha byla smazána.');
             $this->redirect("Administration:bookManagement");
         } else if ($new) {
             $this->database->query("delete from news WHERE news_id  = ?", $id);
+             $this->flashMessage('Novinka byla smazána.');
             $this->redirect("Administration:newManagement");
         } else if ($event) {
             $this->database->query("delete from events WHERE event_id  = ?", $id);
+            $this->flashMessage('Akce byla smazána.');
             $this->redirect("Administration:eventManagement");
         }
     }
@@ -120,7 +125,7 @@ class AdministrationPresenter extends BasePresenter {
             'book_number' => $values->book_number,
             'genre' => $values->genre,
                 ], 'WHERE  `book_id` = ?', $this->id);
-        $this->flashMessage('Kniha byla upravena');
+        $this->flashMessage('Kniha byla upravena.');
         $this->redirect("Administration:bookManagement");
     }
 
@@ -133,24 +138,30 @@ class AdministrationPresenter extends BasePresenter {
 
         $renderer = $form->getRenderer();
         $renderer->wrappers['controls']['container'] = null;
-        $renderer->wrappers['pair']['container'] = 'div class="material"';
-        $renderer->wrappers['label']['container'] = null;
+        $renderer->wrappers['pair']['container'] = 'div class="material padding-input"';
+        $renderer->wrappers['label']['container'] = 'div class="name-control pull-left"';
         $renderer->wrappers['control']['container'] = null;
         $defaults = $this->database->query('SELECT book_name, genre, author_name, author_surname, book_number FROM books where book_id = ?', $this->id)->fetch();
 
         $form->addText('book_name', "Název knihy:")
+                ->setRequired('Zadejte název knihy!')
                 ->setAttribute('class', 'form-control');
         $form->addText('author_name', 'Jméno autora:')
+                ->setRequired('Zadejte název jméno autora!')
                 ->setAttribute('class', 'form-control');
         $form->addText('author_surname', 'Příjmení autora:')
+                ->setRequired('Zadejte název příjmení autora!')
                 ->setAttribute('class', 'form-control');
         $form->addText('book_number', 'Ozačení knihy:')
+                ->setRequired('Zadejte označení knihy!')
                 ->setAttribute('class', 'form-control');
-        $form->addSelect('genre', 'Žánr', $genres)
+        $form->addSelect('genre', 'Žánr:', $genres)
+                ->setRequired('Vyberte žánr')
                 ->setAttribute('class', 'form-control');
         $form->setDefaults($defaults);
         $form->addSubmit('EditBook', 'Upravit knihu')
-                ->setAttribute('class', 'btn btn-primary');
+                ->setAttribute('class', 'btn btn-primary btn-text');
+
         $form->onSuccess[] = [$this, 'EditBookForm'];
         return $form;
     }
@@ -189,21 +200,22 @@ class AdministrationPresenter extends BasePresenter {
 
             $renderer = $form->getRenderer();
             $renderer->wrappers['controls']['container'] = null;
-            $renderer->wrappers['pair']['container'] = 'div class="material"';
-            $renderer->wrappers['label']['container'] = null;
+            $renderer->wrappers['pair']['container'] = 'div class="material padding-input"';
+            $renderer->wrappers['label']['container'] = 'div class="name-control pull-left"';
             $renderer->wrappers['control']['container'] = null;
 
             $form->addText('news_name', 'Název novinky')
-                    ->setRequired('Zadejte prosím název novinky')
+                    ->setRequired('Zadejte název novinky')
                     ->setAttribute('class', 'form-control');
             $form->addTextArea('news_content', 'Obsah novinky')
                     ->setRequired('Obsah novinky')
                     ->setAttribute('class', 'form-control');
-            $form->addText('news_date', 'Zadej datum')
+            $form->addText('news_date', 'Datum novinky')
                     ->setRequired('Datum novinky')
-                    ->setAttribute('class', 'form-control');
-            $form->addSubmit('send', 'Přidat novinku')
-                    ->setAttribute('class', 'btn btn-primary');
+                    ->setAttribute('class', 'form-control')
+                    ->setType('date');
+            $form->addSubmit('send', 'Vytvořit novinku')
+                    ->setAttribute('class', 'btn btn-primary btn-text');
             $form->onSuccess[] = [$this, 'addNew'];
             return $form;
         }
@@ -225,21 +237,22 @@ class AdministrationPresenter extends BasePresenter {
 
             $renderer = $form->getRenderer();
             $renderer->wrappers['controls']['container'] = null;
-            $renderer->wrappers['pair']['container'] = 'div class="material"';
-            $renderer->wrappers['label']['container'] = null;
+            $renderer->wrappers['pair']['container'] = 'div class="material padding-input"';
+            $renderer->wrappers['label']['container'] = 'div class="name-control pull-left"';
             $renderer->wrappers['control']['container'] = null;
 
-            $form->addText('event_name', 'Název novinky')
-                    ->setRequired('Zadejte prosím název akci')
+            $form->addText('event_name', 'Název akce')
+                    ->setRequired('Zadejte název akce!')
                     ->setAttribute('class', 'form-control');
             $form->addTextArea('event_content', 'Obsah akce')
-                    ->setRequired('Obsah novinky')
+                    ->setRequired('Zadeje obsah akce')
                     ->setAttribute('class', 'form-control');
-            $form->addText('event_date', 'Zadej datum')
-                    ->setRequired('Datum akce')
-                    ->setAttribute('class', 'form-control');
-            $form->addSubmit('send', 'Přidat akci')
-                    ->setAttribute('class', 'btn btn-primary');
+            $form->addText('event_date', 'Datum akce')
+                    ->setRequired('Zadejte datum akce!')
+                    ->setAttribute('class', 'form-control')
+                    ->setType('date');
+            $form->addSubmit('send', 'Vytvořit akci')
+                    ->setAttribute('class', 'btn btn-primary btn-text');
             $form->onSuccess[] = [$this, 'addEvent'];
             return $form;
         }
@@ -248,6 +261,7 @@ class AdministrationPresenter extends BasePresenter {
     public function addEvent(UI\Form $form, Nette\Utils\ArrayHash $values) {
         try {
             $this->database->query('INSERT INTO events(event_name ,event_content, event_date) VALUES(?, ?, ?)', $values['event_name'], $values['event_content'], $values['event_date']);
+            $this->flashMessage('Akce byla vytvořena.');
             $this->redirect('Administration:eventManagement');
         } catch (Nette\Security\AuthenticationException $e) {
             $form->addError('Nepovedlo se přidat akci.');
@@ -264,7 +278,7 @@ class AdministrationPresenter extends BasePresenter {
             'event_content' => $values->event_content,
             'event_date' => $values->event_date,
                 ], 'WHERE  `event_id` = ?', $this->id);
-        $this->flashMessage('Kniha byla upravena');
+        $this->flashMessage('Akce byla upravena.');
         $this->redirect("Administration:eventManagement");
     }
 
@@ -273,21 +287,28 @@ class AdministrationPresenter extends BasePresenter {
 
         $renderer = $form->getRenderer();
         $renderer->wrappers['controls']['container'] = null;
-        $renderer->wrappers['pair']['container'] = 'div class="material"';
-        $renderer->wrappers['label']['container'] = null;
+        $renderer->wrappers['pair']['container'] = 'div class="material padding-input"';
+        $renderer->wrappers['label']['container'] = 'div class="name-control pull-left"';
         $renderer->wrappers['control']['container'] = null;
 
-        $defaults = $this->database->query("SELECT event_name, event_content, DATE_FORMAT(event_date,'%d.%m.%Y') as event_date FROM events where event_id = ?", $this->id)->fetch();
+        $defaults = $this->database->query("SELECT event_name, event_content, DATE_FORMAT(event_date,'%Y-%m-%d') as event_date FROM events where event_id = ?", $this->id)->fetch();
 
         $form->addText('event_name', 'Název akce:')
+                ->setRequired('Zadejte název akce!')
                 ->setAttribute('class', 'form-control');
-        $form->addText('event_content', 'Obsah akce:')
+        $form->addTextArea('event_content', 'Obsah akce:')
+                ->setRequired('Zadejte obsah akce!')
                 ->setAttribute('class', 'form-control');
-        $form->addText('event_date', 'Datum:')
-                ->setAttribute('class', 'form-control');
+        $form->addText('event_date', 'Datum akce:')
+                ->setRequired('Zadejte datum akce!')
+                ->setAttribute('class', 'form-control')
+                ->setType('date')
+                ->setDefaultValue((new \DateTime)->format('d-m-Y'));
+
+
         $form->setDefaults($defaults);
-        $form->addSubmit('EditEvent', 'Upravit event')
-                ->setAttribute('class', 'btn btn-primary');
+        $form->addSubmit('EditEvent', 'Upravit akci')
+                ->setAttribute('class', 'btn btn-primary btn-text');
         $form->onSuccess[] = [$this, 'EditEventForm'];
         return $form;
     }
@@ -302,7 +323,7 @@ class AdministrationPresenter extends BasePresenter {
             'news_content' => $values->news_content,
             'news_date' => $values->news_date,
                 ], 'WHERE  `news_id` = ?', $this->id);
-        $this->flashMessage('Událost byla upravena.');
+        $this->flashMessage('Novinka byla upravena.');
         $this->redirect("Administration:newManagement");
     }
 
@@ -311,20 +332,22 @@ class AdministrationPresenter extends BasePresenter {
 
         $renderer = $form->getRenderer();
         $renderer->wrappers['controls']['container'] = null;
-        $renderer->wrappers['pair']['container'] = 'div class="material"';
-        $renderer->wrappers['label']['container'] = null;
+        $renderer->wrappers['pair']['container'] = 'div class="material padding-input"';
+        $renderer->wrappers['label']['container'] = 'div class="name-control pull-left"';
         $renderer->wrappers['control']['container'] = null;
 
-        $defaults = $this->database->query("SELECT news_name, news_content, DATE_FORMAT(news_date,'%d.%m.%Y') as news_date FROM news where news_id = ?", $this->id)->fetch();
-        $form->addText('news_name', 'Název akce:')
+        $defaults = $this->database->query("SELECT news_name, news_content, DATE_FORMAT(news_date,'%Y-%m-%d') as news_date FROM news where news_id = ?", $this->id)->fetch();
+
+        $form->addText('news_name', 'Název novinky:')
                 ->setAttribute('class', 'form-control');
-        $form->addText('news_content', 'Obsah akce:')
+        $form->addTextArea('news_content', 'Obsah novinky:')
                 ->setAttribute('class', 'form-control');
         $form->addText('news_date', 'Datum:')
-                ->setAttribute('class', 'form-control');
+                ->setAttribute('class', 'form-control')
+                ->setType('date');
         $form->setDefaults($defaults);
-        $form->addSubmit('EditNew', 'Upravit event')
-                ->setAttribute('class', 'btn btn-primary');
+        $form->addSubmit('EditNew', 'Upravit noviku')
+                ->setAttribute('class', 'btn btn-primary btn-text');
         $form->onSuccess[] = [$this, 'EditNewForm'];
         return $form;
     }
@@ -336,6 +359,7 @@ class AdministrationPresenter extends BasePresenter {
     public function DuplicateBookForm(UI\Form $form, $values) {
         try {
             $this->database->query('INSERT INTO books(book_name ,author_name, author_surname, book_number, genre) VALUES(?, ?, ?, ?, ?)', $values['book_name'], $values['author_name'], $values['author_surname'], $values['book_number'], $values['genre']);
+            $this->flashMessage('Kniha byla duplikována.');
             $this->redirect('Administration:bookManagement');
         } catch (Nette\Security\AuthenticationException $e) {
             $form->addError('Nepovedlo se přidat knihu.');
@@ -351,11 +375,11 @@ class AdministrationPresenter extends BasePresenter {
 
         $renderer = $form->getRenderer();
         $renderer->wrappers['controls']['container'] = null;
-        $renderer->wrappers['pair']['container'] = 'div class="material"';
-        $renderer->wrappers['label']['container'] = null;
+        $renderer->wrappers['pair']['container'] = 'div class="material padding-input"';
+        $renderer->wrappers['label']['container'] = 'div class="name-control pull-left"';
         $renderer->wrappers['control']['container'] = null;
 
-        $defaults = $this->database->query('SELECT book, user, until FROM leases where lease_id = ?', $this->id)->fetch();
+        $defaults = $this->database->query('SELECT book_name, genre, author_name, author_surname, book_number FROM books where book_id = ?', $this->id)->fetch();
 
         $form->addText('book_name', "Název knihy:")
                 ->setAttribute('class', 'form-control disabled text-danger');
@@ -369,7 +393,7 @@ class AdministrationPresenter extends BasePresenter {
                 ->setAttribute('class', 'form-control disabled text-danger');
         $form->setDefaults($defaults);
         $form->addSubmit('DuplicateBook', 'Duplikovat')
-                ->setAttribute('class', 'btn btn-primary');
+                ->setAttribute('class', 'btn btn-primary btn-text');
         $form->onSuccess[] = [$this, 'DuplicateBookForm'];
         return $form;
     }

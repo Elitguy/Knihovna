@@ -1,17 +1,29 @@
-{var $title = 'Administrace menu'}
-<h2>Administrace</h2>
+{var $title = 'Administrace'}
 {block content}
-<section id="tabs">
+{if $user->isInRole("administrator")}
     <div class="container">
-        <h6 class="section-title h1">Administrace knihovny</h6>
-        <hr>
-        <div class="row">
-            <div class="col-md-12 ">               
-                <a n:href="Administration:bookManagement">Správa knih</a><br>
-                <a n:href="Administration:newManagement">Novinky</a><br>
-                <a n:href="Administration:eventManagement">Akce</a><br>
+        <div class="row animated animatedFadeInUp fadeInUp white-background-admin">
+            <div class="col-md-12">
+                <strong class="h5">Administrace</strong>  
             </div>
+            <div class="col-md-12">
+                <div class="main-center">
+                <a n:href="Administration:bookManagement"><button type="button" class="btn btn-secondary btn-lg">Správa knih</button></a>
+                <a n:href="Administration:newManagement"><button type="button" class="btn btn-secondary btn-lg">Novinky</button></a>
+                <a n:href="Administration:eventManagement"><button type="button" class="btn btn-secondary btn-lg">Akce</button></a>
+                </div>
+            </div>  
         </div>
     </div>
-</section>
+</div>
+{else}
+    <div class="container">
+        <div class="row animated animatedFadeInUp fadeInUp white-background-danger">
+            <div class="col-md-12">
+                <strong class="danger-text">Nemáš povolení k této akci!</strong>  
+            </div> 
+        </div>
+    </div>
+{/if}
 {/block}
+

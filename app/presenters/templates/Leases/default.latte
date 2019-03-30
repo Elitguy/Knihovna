@@ -1,48 +1,60 @@
 {var $title = 'Výpůjčky'}
 {block content}
-<div class="row">
-    <div class="col-md-12">
-        <div class="card">
-            <h3 class="card-header text-center font-weight-bold text-uppercase py-4">Výpujčky knihovny</h3>
-            <div class="card-body">
-                <div id="table" class="table-editable">
-                    <span class="table-add float-right mb-3 mr-2"><a n:href="Leases:createLease" class="text-success"><i class="fa fa-plus fa-2x" aria-hidden="true"></i></a></span>
-                    <label>Vyhledat:<input type="search" id="myInput" onkeyup="myFunction()"class="form-control form-control-sm"></label>
-                    <table id="myTable" class="table table-bordered table-responsive-md table-striped text-center">
-                        <tr>
-                            <th class="text-center">Jméno uživatele</th>
-                            <th class="text-center">Název knihy</th>
-                            <th class="text-center">Číslo knihy</th>
-                            <th class="text-center">Datum</th>
-                            <th class="text-center">Akce</th>
-                        </tr>
-                        <tbody>
+{if $user->isInRole("administrator")}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <h3 class="card-header text-center font-weight-bold text-uppercase py-4">Výpujčky knihovny</h3>
+                    <div class="card-body">
+                        <div id="table" class="table-editable">
+                            <span class="table-add float-right mb-3 mr-2"><a n:href="Leases:createLease" class="text-success"><i class="fa fa-plus fa-2x" aria-hidden="true"></i></a></span>
+                            <label class="pull-left">Vyhledat: <input placeholder="Zadejte název knihy" type="search" id="myInput" onkeyup="myFunction()"class="form-control-sm search-form"></label>
+                            <table id="myTable" class="table table-bordered table-responsive-md table-striped text-center">
+                                <tr>
+                                    <th class="text-center">Jméno uživatele</th>
+                                    <th class="text-center">Název knihy</th>
+                                    <th class="text-center">Číslo knihy</th>
+                                    <th class="text-center">Datum</th>
+                                    <th class="text-center">Akce</th>
+                                </tr>
+                                <tbody>
 
-                            {foreach $LeasesBooks as $row}
-                                <tr>          
-                                    <td>{$row->user_name} {$row->user_surname}</td>
-                                    <td>{$row->book_name}</td>   
-                                    <td>{$row->book_number}</td>   
-                                    {if ($row->late == 1)}
+                                    {foreach $LeasesBooks as $row}
+                                        <tr>          
+                                            <td>{$row->user_name} {$row->user_surname}</td>
+                                            <td>{$row->book_name}</td>   
+                                            <td>{$row->book_number}</td>   
+                                            {if ($row->late == 1)}
 
-                                        <td class="bg-danger">{$row->until}</td>
+                                                <td class="bg-danger">{$row->until}</td>
 
-                                    {else}
-                                        <td class="bg-success">{$row->until}</td>  
+                                            {else}
+                                                <td class="bg-success">{$row->until}</td>  
 
-                                    {/if}    
-                                     <td>
-                                   <span class="table-remove"><a n:href = "Leases:editLease $row->lease_id"><button type="button" class="btn btn-primary btn-rounded btn-sm my-0">Upravit</button></a></span>
-                                  <span class="table-remove"><a n:href="delete!, $row->lease_id"><button type="button" class="btn btn-danger btn-rounded btn-sm my-0">Odebrat</button></a></span>
-                                </td>
-                                {/foreach}
+                                            {/if}    
+                                            <td>
+                                                <span class="table-remove"><a n:href = "Leases:editLease $row->lease_id"><button type="button" class="btn btn-primary btn-rounded btn-sm my-0">Upravit</button></a></span>
+                                                <span class="table-remove"><a n:href="delete!, $row->lease_id" onclick="return confirm('Opravdu chcete odebrat výpůjčku?')"><button type="button" class="btn btn-danger btn-rounded btn-sm my-0">Odebrat</button></a></span>
+                                            </td>
+                                        {/foreach}
 
-                        </tbody>
-                    </table>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 
+{else}
+    <div class="container">
+        <div class="row animated animatedFadeInUp fadeInUp white-background-danger">
+            <div class="col-md-12">
+                <strong class="danger-text">Nemáš povolení k této akci!</strong>  
+            </div> 
+        </div>
+    </div>
+{/if}
 {/block}

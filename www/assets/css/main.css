@@ -1,15 +1,442 @@
-main{
-    padding-top: 25px;
-
-}
 .size{
     padding-right: 300px;
+}
+textarea{
+    min-height: 200px;
+}
+.content{
+    max-width: 360px;
+}
+.a-item{
+    color: black;
+}
+.a-item:hover{
+    color: black;
+}
+.items{
+    font-size: 20px;
+    padding: 5px;
+    text-align: justify;
+    color: black;
+}
+.news{
+    font-size: 20px;
+    padding: 5px;
+}
+.btn-more{
+    background-color: black;
+    border-color: black;
+    color: white!important;
+}
+
+.x{
+    margin-top: 100px;
+}
+body{
+    margin-top: 100px;
+}
+a:hover{
+    text-decoration: none;
 }
 .mb-1, .my-1 {
     margin-bottom: 0rem!important;
 }
+.profil-table{
+    color: black;
+    text-transform: uppercase;
+}
+.alert-success{
+    text-align: center;
+    border-radius: 0px;
+}
+.fa-plus:before{
+    margin-left: -60px;
+}
+.fa-arrow-left:before{
+    margin-left: -90px!important;
+}
+.main-center{
+    text-align: center;
+}
+.search-book{
+    margin-top: 27px;
+    margin-left: 21px;
+}
+.table-wrapper-scroll-y {
+    display: block;
+    max-height: 46vh;
+    overflow-y: auto;
+    -ms-overflow-style: -ms-autohiding-scrollbar;
+}
+
+.th-name{
+    text-transform: uppercase;
+    font-weight: 700;
+    background-color: grey;
+}
+.profil-table-content{
+    color: black;
+}
+.text-center{
+    text-align: center;
+}
+.wrapper {	
+    margin-top: 80px;
+    margin-bottom: 80px;
+}
+btn-login{
+    text-transform: uppercase;
+}
+.Form {
+    max-width: 412px;
+    padding: 15px 35px 45px;
+    margin: 0 auto;
+    background-color: #fff;
+    border: 1px solid rgba(0,0,0,0.1);  
+    border-radius: 10px;
+}
+.form-signin-heading{
+    text-align: center;
+    padding: 10px;
+}
+.administration-heading{
+    text-align: center;
+    padding: 30px;
+}
+
+
+.fixed_header tbody{
+    display:-webkit-inline-box;
+    overflow: auto;
+    max-height: 50vh;
+}
+.fixed_header-default tbody{
+    display:-webkit-inline-box;
+    overflow: auto;
+    max-height: 50vh;
+}
+.table-bordered, .table-bordered td, .table-bordered th{
+    border: 0px solid; 
+}
+.table td, .table th{
+    vertical-align: unset;
+}
 
 .view,
 .mask{
-	overflow: visible !important;
+    overflow: visible !important;
+}
+
+.search-form{
+    color: #495057;
+    background-color: #fff;
+    border: 1px solid #ced4da;
+    border-radius: .25rem;
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+
+}
+.name-control{
+    color: black;
+    font-weight: bold;
+    text-transform: uppercase;
+    padding-left: 2px;  
+}
+.padding-input{
+    padding-top: 10px;
+}
+.card-body{
+    padding-bottom: 100px;
+}
+
+.btn-text{
+    text-align: center;
+    font-size: 15px;
+    padding: 5px;
+}
+.danger-text{
+    color: red;
+    font-size: 50px;
+    font-weight: 700;
+}
+.white-background-danger{
+    background-color: white;
+    padding-bottom: 50px;
+    margin-top: 100px;
+    padding-top: 50px;
+    border-radius: 15px;
+    text-align: center;
+}
+
+.error-text{
+    color:white;
+}
+.white-background{
+    background-color: white;    
+    border-radius: 4px;
+    margin-bottom: 8px;
+    margin-top: 4px;
+}
+.white-background-admin{
+    background-color: white;    
+    border-radius: 4px;
+    margin-bottom: 8px;
+    margin-top: 4px;
+    padding-bottom: 25px;
+}
+
+
+a{
+    color: white;
+}
+p{
+    font-size: 20px;
+    padding: 5px;
+    text-align: justify;
+    color: black;
+}
+li-item-list{
+
+}
+a:hover{
+    color: white;
+}
+
+.pofile-name{
+    padding-top: 25px;
+    padding-bottom: 25px;
+    font-weight: 700;
+}
+.footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: white;
+    color: white;
+    text-align: center;
+    padding: 20px;
+}
+.footer-text{
+    color: black;
+    font-size: 15px;
+    font-weight: 700;
+
+}
+
+body { 
+    background: linear-gradient(to right, rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('../images/background.jpg');
+    background-position: center center;
+    background-repeat:  no-repeat;
+    background-attachment: fixed;
+    background-size:  cover;
+    font-family: 'Roboto', sans-serif;
+}
+
+
+div, body{
+    margin: 0;
+    padding: 0;
+    font-family: exo, sans-serif;
+
+
+
+}
+.wrapper {
+    height: 100%; 
+    width: 100%; 
+}
+
+main {
+
+
+}
+
+.navbar {
+    padding: 0.89rem 1rem;
+    z-index: 100;
+
+}
+
+.h5 {
+    color: black;
+    display: block;
+    margin: 0px;
+    font-weight: 700;
+    text-transform: uppercase;
+    text-align: center;
+    padding: 50px;
+    font-size: 60px;
+}
+.card-header{
+    color: black;
+    text-transform: uppercase;
+    text-align: center;
+    font-weight: 700;
+}
+.card-body{
+    color: black;
+    text-align: center;
+    padding: 1.10rem;
+
+}
+
+.btn-outline-primary {
+    border: 2px solid white!important;
+    background-color: transparent!important;
+    color: white!important;
+    border-radius: 15px;
+    font-size: 20px;
+}
+.btn-outline-primary:hover {
+    border-color: black!important;
+    background-color: transparent!important;
+    color: black!important;
+}
+.center-button{
+    text-align: center;
+}
+.info-color {
+    background-color: white !important;  
+
+}
+.nav-link {
+    color: black!important;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+.navbar-brand {
+    color: black!important;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+.navbar-toggler{
+    background-color: black;
+}
+
+
+@keyframes fadeInUp {
+    from {
+        transform: translate3d(0,40px,0)
+    }
+
+    to {
+        transform: translate3d(0,0,0);
+        opacity: 1
+    }
+}
+
+@-webkit-keyframes fadeInUp {
+    from {
+        transform: translate3d(0,40px,0)
+    }
+
+    to {
+        transform: translate3d(0,0,0);
+        opacity: 1
+    }
+}
+
+.animated {
+    animation-duration: 1s;
+    animation-fill-mode: both;
+    -webkit-animation-duration: 1s;
+    -webkit-animation-fill-mode: both
+}
+
+.animatedFadeInUp {
+    opacity: 0
+}
+
+.fadeInUp {
+    opacity: 0;
+    animation-name: fadeInUp;
+    -webkit-animation-name: fadeInUp;
+}
+h1{
+    color: white;
+    display: block;
+    margin: 0px;
+    font-weight: 700;
+    text-transform: uppercase;
+    text-shadow: 3px 5px 5px rgba(0, 0, 0, 0.5);
+    text-align: center;
+    padding-top: 100px;
+    padding-bottom: 40px;
+    font-size: 60px;
+}
+
+@media only screen and (max-width: 1199px){
+    .info-color {
+        font-size: 13px;
+    }
+
+
+}
+
+@media only screen and (max-width: 991px) {
+    h1{
+        font-size: 40px;
+    }
+    .nav-link{
+        font-size: 16px;
+    }
+    .text-backgroung{
+        margin-top: 33px;
+    }
+    .white-background{
+        margin-left: 15px;
+        margin-right: 15px;
+    }
+    .footer-fix{
+        margin-bottom: 144px;
+
+    }
+    .danger-text {
+        font-size: 35px;
+    }
+    .h5 {
+        font-size: 35px;
+        padding: 20px;
+    }
+    p{
+        font-size: 17px;
+    }
+
+}
+
+@media only screen and (max-width: 767px) {
+
+    h1{
+        padding-top: 40px;
+    }
+    .text-backgroung{
+        margin-top: 80px;
+    }
+    .section-white {
+        padding: 94px 0px;
+    }
+    .footer-fix{
+        margin-bottom: 144px;
+    }
+
+    .Form {
+        max-width: 412px;
+        padding: 15px 35px 73px;
+        margin: 0 auto;
+        background-color: #fff;
+        border: 1px solid rgba(0,0,0,0.1);  
+        border-radius: 10px;
+        margin-left: 11px;
+        margin-right: 11px;
+        margin-top: -100px;
+    }
+    .profil-table {
+        font-size: 10px;
+    }
+    .profil-table-content{
+        font-size: 14px;
+    }
+    .pofile-name{
+        text-align: center;
+    }
 }

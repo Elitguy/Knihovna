@@ -1,30 +1,27 @@
 {var $title = 'Služby knihovny'}
-
 {block content}
-<div class="row">
-    <div class="col-md-9">
-        <h2>Služby knihovny</h2>
-        <div>
+
+<div class="container">
+    <div class="row animated animatedFadeInUp fadeInUp">
+        <div class="col-lg-9 white-background">
+            <strong class="h5">Služby knihovny</strong>
             <p>Milí návštěvníci, nabízíme Vám především tyto služby:</p>
             <ul>
-                <li><strong><u>Výpůjční služby</u></strong>&nbsp;Vám zajistí neomezený přísun četby přesně podle Vašeho vkusu a nálady. Báječná věc, pohodlná a praktická. Žáci Základní Školy Hrochův Týnec neplatí žádné registrační poplatky, výpůjčky jsou&nbsp;<strong><u>zcela zdarma</u></strong>.</li>
-                <li><strong><u>Zodpovíme Vaše dotazy!</u></strong></li>
+                <li  class="items"><strong>Výpůjční služby</strong> Vám zajistí neomezený přísun četby přesně podle Vašeho vkusu a nálady. Báječná věc, pohodlná a praktická. Žáci Základní Školy Hrochův Týnec neplatí žádné registrační poplatky, výpůjčky jsou <strong>zcela zdarma</strong>.</li>
+                <li  class="items">Nejdůležitější informace o provozu naší knihovny a pravidlech pro výpůjčky naleznete v <strong><a class="a-item" href="{$baseUrl}/assets/regulations/Řád_knihovny.pdf" target="_blank">knihovním řádu</a></strong>.</li>
             </ul>
-            <p>Nejdůležitější informace o provozu naší knihovny a pravidlech pro výpůjčky naleznete v knihovním řádu.</p>
-            <p><strong>Budeme rádi, když nám dáte vědět, zda jste s našimi službami spokojeni!</strong></p>
-            <!--    <p>Oslovte nás přímo v knihovně, nebo využijte <a href="https://zsht-knihovna.webnode.cz/kontakt/">on-line kontaktní formulář</a>.<span style="display: none;">&nbsp;</span></p>-->
-        </div>
-        <p>&nbsp;</p>
-    </div>
-    <div class="col-md-3">
-        <div class="card my-3">  
-            {include ../News/default.latte}
-        </div>
-        <div class="card my-4">
-            {include ../Events/default.latte}
+            <p>Budeme rádi, když nám dáte vědět, zda jste s našimi službami spokojeni!</p>
+            <p>Oslovte nás přímo v knihovně, nebo využijte <strong><a class="a-item" n:href="Page:contact">kontaktní formulář</a></strong>.</p>
+        </div>  
+        <div class="col-lg-3 footer-fix">
+            <div class="card my-1">  
+                {include ../News/default.latte}
+            </div>
+            <div class="card my-2">
+                {include ../Events/default.latte}
+            </div>
         </div>
     </div>
 </div>
 
 {/block}
-

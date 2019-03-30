@@ -17,35 +17,29 @@ class LoginPresenter extends BasePresenter {
 
     protected function createComponentLoginForm() {
         $form = new UI\Form;
-        $renderer = $form->getRenderer();
-        $renderer->wrappers['controls']['container'] = null;
-        $renderer->wrappers['pair']['container'] = 'div class="material"';
-        $renderer->wrappers['label']['container'] = null;
-        $renderer->wrappers['control']['container'] = null;
-
-        $form->addText('student_email', 'Email:')
-                ->setAttribute('class', 'form-control');
-        $form->addPassword('password', 'Heslo:')
-                ->setAttribute('class', 'form-control');
-        $form->addSubmit('login', 'Přihlásit se')
-                ->setAttribute('class', 'btn btn-primary');
+        $form->addText('user_email')
+                ->setRequired('Prosím vyplňte svůj email.')
+                ->setAttribute('placeholder', 'Email');
+        $form->addPassword('password')
+                ->setRequired('Prosím vyplňte své heslo.')
+                ->setAttribute('placeholder', 'Heslo');
+        $form->addSubmit('login', 'Přihlásit se');
         $form->onSuccess[] = [$this, 'loginFormSucceeded'];
         return $form;
     }
 
     public function loginFormSucceeded(UI\Form $form, $values) {
         try {
-            $this->getUser()->login($values->student_email, $values->password);
+            $this->getUser()->login($values->user_email, $values->password);
             $this->flashMessage('Byl jste úspěšně přihlášen.');
-            $this->redirect('Homepage:');
+            if ($this->getUser()->isInRole("administrator")) {
+                $this->flashMessage('Byl/a jste úspěšně přihlášen.');
+                $this->redirect('Administration:');
+            } else {
+                $this->redirect('Profile:');
+            }
         } catch (Nette\Security\AuthenticationException $e) {
-            $this->flashMessage($e->getMessage());
+            $form->addError('Nesprávné přihlašovací email nebo heslo.');
         }
     }
-
-    public function actionLogout() {
-        $this->getUser()->logout();
-        $this->redirect('Homepage:');
-    }
-
 }

@@ -2,6 +2,6 @@ parameters:
 
 
 database:
-	dsn: 'mysql:host=localhost;dbname=knihovna'
-	user:	root
-	password: 123
+	dsn: 'mysql:host=localhost;dbname=DATABASE_NAME'
+	user:	USER_NAME
+	password: PASSWORD

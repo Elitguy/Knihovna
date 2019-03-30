@@ -24,26 +24,26 @@ class RegisterPresenter extends BasePresenter {
 
     protected function createComponentRegisterForm() {
         $form = new UI\Form;
-        $renderer = $form->getRenderer();
-        $renderer->wrappers['controls']['container'] = null;
-        $renderer->wrappers['pair']['container'] = 'div class="material"';
-        $renderer->wrappers['label']['container'] = null;
-        $renderer->wrappers['control']['container'] = null;
-        
-        $form->addText('user_name', 'Jméno:')
+        $form->addText('user_name')
                 ->setRequired('Zadejte prosím jméno.')
-                ->setAttribute('class', 'form-control');
-        $form->addText('user_surname', 'Příjmení:')
+                ->setAttribute('placeholder', 'Jméno');
+        $form->addText('user_surname')
                 ->setRequired('Zadejte prosím příjmení.')
-                ->setAttribute('class', 'form-control');
-        $form->addText('user_email', 'Email:')
+                ->setAttribute('placeholder', 'Příjmení');
+        $form->addText('user_email')
                 ->setRequired('Zadejte prosím email.')
-                ->setAttribute('class', 'form-control');
-        $form->addPassword('password', 'Heslo:')
-                ->setRequired('Zadejte prosím heslo')
-                ->setAttribute('class', 'form-control');
+                ->setAttribute('placeholder', 'Email')
+                ->addRule($form::EMAIL, 'Email nemá správný formát.');
+        $form->addPassword('password')
+                ->setAttribute('placeholder', 'Heslo')
+                ->setRequired('Zadejte prosím heslo.');
+        $form->addPassword('password2', 'Heslo znovu: ')
+                ->setAttribute('placeholder', 'Ověření hesla')
+                ->setRequired('Zadejte prosím ověření hesla.')
+                ->addConditionOn($form['password'], $form::VALID)
+                ->addRule($form::EQUAL, 'Hesla se neshodují.', $form['password']);
         $form->addSubmit('register', 'Zaregistrovat se')
-                ->setAttribute('class', 'btn btn-primary');
+                ->setAttribute('class', 'btn btn-primary btn-text');
         $form->onSuccess[] = [$this, 'registerFormSucceeded'];
         return $form;
     }
@@ -57,7 +57,7 @@ class RegisterPresenter extends BasePresenter {
             'role' => $this->getUser()->authenticatedRole
         ]);
         $this->flashMessage('Byl jste úspěšně zaregistrován.');
-        $this->redirect('Homepage:');
+        $this->redirect('Login:');
     }
 
 }

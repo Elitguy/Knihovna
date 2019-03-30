@@ -1,13 +1,14 @@
 {block content}
 <h5 class="card-header">Akce</h5>
 <div class="card-body">
-    {foreach $MyEvents as $row}
-        {if $row->count > 0 }
-        <strong>{$row->event_name} - {$row->event_date}</strong>     
-        {else}
-            <strong>Nemáme žádné akce</strong>    
-        {/if}
-    {/foreach}
+    {if count($MyNews) > 0 }
+        {foreach $MyEvents as $row}     
+            <strong class="card-my-text">{$row->event_name} - {$row->event_date}</strong><hr>    
+        {/foreach}
+        <a n:href="Events:eventsMore" class="btn btn-primary btn-more">Více</a>
+    {else}
+        <strong class="card-my-text">Nemáme žádné akce.</strong>    
+    {/if}
 </div>
 {/block}           
 

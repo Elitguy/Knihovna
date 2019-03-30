@@ -1,26 +1,24 @@
 {var $title = 'O knihovně'}
-
 {block content}
-<div class="row">
-    <div class="col-md-9">
-        <h2>O knihovně</h2>
-        <p>Školní knihovna nabízí prostředí pro studium či trávení volných hodin při čtení knih či práci na úkolech za pomoci knih a encyklopedií v naší knihovně.</p>
-        <p>Kromě toho Vám knihovna nabízí nejen výpůjční služby, ale také návštěvu pravidelných Setkání v knihovně.</p>
-        <p>Z našeho fondu si určitě vyberete. Najdete zde vše od časopisů, domácí i zahraniční beletrie přes dětskou literaturu, sci-fi a fantasy až po slovníky a populárně naučnou a odbornou literaturu.</p>
-        <p>S výběrem knihy či jakýmkoli jiným dotazem Vám rádi pomůžeme!</p>
-    </div>
-    <div class="col-md-3">
-        <div class="card my-3">  
-            {include ../News/default.latte}
+
+    <div class="container">
+        <div class="row animated animatedFadeInUp fadeInUp">
+            <div class="col-lg-9 white-background">
+                 <strong class="h5">O nás</strong>
+                <p>Školní knihovna nabízí prostředí pro studium či trávení volných hodin při čtení knih či práci na úkolech za pomoci knih a encyklopedií v naší knihovně.</p>
+                <p>Kromě toho Vám knihovna nabízí nejen výpůjční služby, ale také návštěvu pravidelných Setkání v knihovně.</p>
+                <p>Z našeho fondu si určitě vyberete. Najdete zde vše od časopisů, domácí i zahraniční beletrie přes dětskou literaturu, sci-fi a fantasy až po slovníky a populárně naučnou a odbornou literaturu.</p>
+                <p>S výběrem knihy či jakýmkoli jiným dotazem Vám rádi pomůžeme!</p>
+            </div>  
+            <div class="col-lg-3 footer-fix">
+                <div class="card my-1">  
+                    {include ../News/default.latte}
+                </div>
+                <div class="card my-2">
+                    {include ../Events/default.latte}
+                </div>
+            </div>
         </div>
-        <div class="card my-4">
-            {include ../Events/default.latte}
-        </div>
     </div>
-</div>
-
-
-        
-
-<!-- Section: Features v.1 -->
+             
 {/block}

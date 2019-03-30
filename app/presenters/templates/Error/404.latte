@@ -1,8 +1,16 @@
-{block content}
-<h1 n:block=title>Page Not Found</h1>
+{var $title = 'Stránka nenalezena'}
 
-<p>The page you requested could not be found. It is possible that the address is
-incorrect, or that the page no longer exists. Please use a search engine to find
-what you are looking for.</p>
-
-<p><small>error 404</small></p>
+{block content} 
+<div class="container">
+    <div class="row animated animatedFadeInUp fadeInUp">
+        <div class="col-md-12">
+            <strong class="h1">Stránka nenalezena</strong>  
+        </div>
+        <div class="col-md-12">
+            <p class="error-text">Stránka, kterou jste požádali, nebyla nalezena. Je možné, že adresa je nesprávně nebo že stránka již neexistuje.</p>
+         
+            <p class="error-text"><big>error 404</big></p>
+        </div>
+    </div>
+</div>
+{/block}

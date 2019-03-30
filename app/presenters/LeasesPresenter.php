@@ -17,10 +17,11 @@ class LeasesPresenter extends BasePresenter {
     }
 
     public function handleDelete($id) {
-
-        $leases = $this->database->query("select * from leases WHERE lease_id  = ?", $id)->fetch();
-        $this->database->query('UPDATE leases SET is_returned=1 WHERE lease_id =?', $leases["lease_id"]);
-        $this->database->query('UPDATE books SET is_available=1 WHERE book_id=?', $leases["book"]);
+        if (!$this->getUser()->isInRole("administration")) {
+            $leases = $this->database->query("select * from leases WHERE lease_id  = ?", $id)->fetch();
+            $this->database->query('UPDATE leases SET is_returned=1 WHERE lease_id =?', $leases["lease_id"]);
+            $this->database->query('UPDATE books SET is_available=1 WHERE book_id=?', $leases["book"]);
+        }
     }
 
     public function getUsers() {
@@ -32,7 +33,7 @@ class LeasesPresenter extends BasePresenter {
         $result = $this->database->query("SELECT book_id, book_name, book_number, concat(book_name, '-', book_number) as book from books WHERE is_available=1");
         return $result;
     }
-    
+
     public function getHistory() {
         $result = $this->database->query("SELECT b.book_name, g.genre_name, b.author_name, b.author_surname FROM books b JOIN leases l ON l.book = book_id JOIN genres g ON g.genre_id WHERE user_id = ? AND l.is_returned=1");
         return $result;
@@ -53,26 +54,26 @@ class LeasesPresenter extends BasePresenter {
             }
             $renderer = $form->getRenderer();
             $renderer->wrappers['controls']['container'] = null;
-            $renderer->wrappers['pair']['container'] = 'div class="material"';
-            $renderer->wrappers['label']['container'] = null;
+            $renderer->wrappers['pair']['container'] = 'div class="material padding-input"';
+            $renderer->wrappers['label']['container'] = 'div class="name-control pull-left"';
             $renderer->wrappers['control']['container'] = null;
 
             $form->addSelect('user', 'Vyberte uživatele', $users)
-                    ->setRequired('Vyberte uživatelské jméno')
+                    ->setRequired('Vyberte uživatele')  
                     ->setAttribute('class', 'form-control');
 
-            $form->addSelect('book', 'Vyber knihu', $books)
+            $form->addSelect('book', 'Vyberte knihu', $books)
                     ->setRequired('Vyberte knihu')
                     ->setAttribute('class', 'form-control');
 
-            $form->addText('until', 'Datum')
+            $form->addText('until', 'Zadejte datum  ')
                     ->setRequired('Zadejte datum do kdy chcete knihu půjčit')
-                    ->setDefaultValue('yyyy-mm-dd')
-                    ->addRule($form::PATTERN, 'Zadali jste datum ve špatném formátu', '([12]\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01]))')
-                    ->setAttribute('class', 'form-control');
+                    ->setAttribute('class', 'form-control')
+                    ->setType('date');
 
             $form->addSubmit('send', 'Přidat výpůjčku')
-                    ->setAttribute('class', 'btn btn-primary');
+                    ->setAttribute('class', 'btn btn-primary btn-text')
+                    ->setAttribute('onclick', 'return confirm("Opravdu chcete vytvořit výpůjčku?")');
             $form->onSuccess[] = [$this, 'AddLease'];
 
             return $form;
@@ -109,11 +110,11 @@ class LeasesPresenter extends BasePresenter {
 
         $renderer = $form->getRenderer();
         $renderer->wrappers['controls']['container'] = null;
-        $renderer->wrappers['pair']['container'] = 'div class="material"';
-        $renderer->wrappers['label']['container'] = null;
+        $renderer->wrappers['pair']['container'] = 'div class="material padding-input"';
+        $renderer->wrappers['label']['container'] = 'div class="name-control pull-left"';
         $renderer->wrappers['control']['container'] = null;
 
-        $defaults = $this->database->query("SELECT concat(user_name, ' ', user_surname) as fullname, b.book_number, l.user, l.until, b.book_name FROM books b JOIN leases l ON l.book = b.book_id JOIN users u ON u.user_id = l.user where lease_id = ?", $this->id)->fetch();
+        $defaults = $this->database->query("SELECT concat(user_name, ' ', user_surname) as fullname, b.book_number, l.user, DATE_FORMAT(until,'%Y-%m-%d') as until, b.book_name FROM books b JOIN leases l ON l.book = b.book_id JOIN users u ON u.user_id = l.user where lease_id = ?", $this->id)->fetch();
         $form->addText('book_name', 'Název knihy:')
                 ->setAttribute('class', 'form-control disabled text-danger');
         $form->addText('book_number', 'Číslo knihy:')
@@ -121,11 +122,12 @@ class LeasesPresenter extends BasePresenter {
         $form->addText('fullname', 'Uživatel:')
                 ->setAttribute('class', 'form-control disabled text-danger');
         $form->addText('until', 'Datum:')
+                ->setRequired('Zadejte prosím datum!')
                 ->setAttribute('class', 'form-control')
                 ->setType('date');
         $form->setDefaults($defaults);
         $form->addSubmit('EditLease', 'Upravit výpůjčku')
-                ->setAttribute('class', 'btn btn-primary');
+                ->setAttribute('class', 'btn btn-primary btn-text');
         $form->onSuccess[] = [$this, 'EditLeaseForm'];
         return $form;
     }
